@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">MomKitchen</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="demo_info_desc">Discover the joy of cooking with our innovative and user-friendly food recipe app. Whether you\'re a seasoned chef or a kitchen novice, our app is designed to inspire and simplify your culinary journey. Unleash your inner chef and embark on a delicious adventure with a vast collection of recipes at your fingertips.</string>
     <item name="home" type="id"/>
     <item name="category" type="id"/>
     <item name="info" type="id"/>
