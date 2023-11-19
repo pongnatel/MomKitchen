@@ -27,7 +27,7 @@
                 android:layout_marginBottom="10dp"
                 android:text="Step 1/7"
                 android:textColor="@color/customBlack"
-                android:textSize="15sp"
+                android:textSize="25sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -35,7 +35,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Random"
-                android:textColor="@color/black" />
+                android:textSize="22sp" />
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>

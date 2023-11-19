@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -32,6 +33,8 @@ public class Recipe extends AppCompatActivity {
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra("mealModel")) {
             MealModel mealModel = intent.getParcelableExtra("mealModel");
+            TextView meal_name = (TextView) findViewById(R.id.detail_meal_name);
+            meal_name.setText(mealModel.getStrMeal());
 
             RecyclerView rvItems = (RecyclerView) findViewById(R.id.detail_meal_list_ingre);
             LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
@@ -39,9 +42,6 @@ public class Recipe extends AppCompatActivity {
             rvItems.setHasFixedSize(true);
             rvItems.setAdapter(new RecyclerIngreAdapter(this, mealModel.getStrIngredients(), mealModel.getStrMeasurements()));
 
-            Log.i("meas",mealModel.getStrMeasurements()[0]);
-
-            Log.i("ingre",mealModel.getStrIngredients()[1]);
             ImageView image = (ImageView) findViewById(R.id.detail_meal_image);
             String id = "i" + mealModel.getIdMeal();
             int resourceId = this.getResources().getIdentifier(id, "drawable", this.getPackageName());
