@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">MomKitchen</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <item name="home" type="id"/>
+    <item name="category" type="id"/>
+    <item name="info" type="id"/>
+</resources>
