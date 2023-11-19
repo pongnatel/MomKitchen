@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -22,6 +23,12 @@ import com.example.momkitchen.Adapter.ViewPagerAdapter;
 import com.example.momkitchen.Model.MealModel;
 
 public class Recipe extends AppCompatActivity {
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish(); // Close the activity
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +52,6 @@ public class Recipe extends AppCompatActivity {
             ImageView image = (ImageView) findViewById(R.id.detail_meal_image);
             String id = "i" + mealModel.getIdMeal();
             int resourceId = this.getResources().getIdentifier(id, "drawable", this.getPackageName());
-//        String imageUrl = "R.drawable.i" + meals.get(position).getIdMeal();
             if (resourceId != 0) {
                 // Resource found, you can use resourceId
                 Glide.with(this)
@@ -65,6 +71,17 @@ public class Recipe extends AppCompatActivity {
             Button buttonNext = findViewById(R.id.buttonNext);
             Button buttonPrevious = findViewById(R.id.buttonPrevious);
 
+            if (mealModel.getStrYoutube() != null){
+                Button buttonSource = findViewById(R.id.source);
+                buttonSource.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String source = mealModel.getStrYoutube();
+                        gotoUrl(source);
+                    }
+                });
+            }
+
             buttonNext.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -82,9 +99,11 @@ public class Recipe extends AppCompatActivity {
                     }
                 }
             });
-
-
-            Toast.makeText(this, mealModel.getStrCategory(), Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void gotoUrl(String s){
+        Uri uri = Uri.parse(s);
+        startActivity(new Intent(Intent.ACTION_VIEW,uri));
     }
 }

@@ -8,19 +8,18 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_weight="1">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="10dp"
-            android:paddingBottom="20dp"
-            tools:layout_marginBottom="20dp">
+            android:padding="10dp">
 
             <TextView
                 android:id="@+id/detail_meal_name"
@@ -76,7 +75,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="54dp">
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/buttonNext"
@@ -100,6 +99,16 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/source"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/button_source"
+                android:drawableLeft="@drawable/ytb_icon"
+                android:paddingHorizontal="16dp"
+                android:text="Click here to see guidance video" />
 
         </LinearLayout>
     </ScrollView>
