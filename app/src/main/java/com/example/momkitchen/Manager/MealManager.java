@@ -11,7 +11,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MealManager {
 
@@ -59,6 +61,37 @@ public class MealManager {
         }
 
         return meals;
+    }
+
+    public static Map<String, List<MealModel>> getMealsByCategories(Context context, String... categories) {
+        Map<String, List<MealModel>> mealsByCategory = new HashMap<>();
+
+        try {
+            String file = "meals.json";
+            JSONArray jsonArray = JsonLoader.loadJson(context, file);
+            int max = jsonArray.length();
+
+            for (String category : categories) {
+                List<MealModel> meals = new ArrayList<>();
+
+                for (int i = 0; i < max; i++) {
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                    String mealCategory = jsonObject.getString("strCategory");
+
+                    if (mealCategory.equalsIgnoreCase(category)) {
+                        MealModel meal = createMealModel(jsonObject);
+                        meals.add(meal);
+                    }
+                }
+
+                mealsByCategory.put(category, meals);
+            }
+        } catch (Exception e) {
+            // Handle exception or log error
+            e.printStackTrace();
+        }
+
+        return mealsByCategory;
     }
 
     private static MealModel createMealModel(JSONObject jsonObject) {

@@ -20,32 +20,33 @@ import com.example.momkitchen.Recipe;
 
 import java.util.List;
 
-public class RecyclerDataAdapter extends RecyclerView.Adapter<RecyclerDataAdapter.DataViewHolder>{
+public class RecyclerCateadapter extends RecyclerView.Adapter<RecyclerCateadapter.CateViewHolder>{
 
     private List<MealModel> meals;
     private Context context;
 
-    public RecyclerDataAdapter(Context context, List<MealModel> meals) {
+    public RecyclerCateadapter(Context context, List<MealModel> meals) {
         this.meals = meals;
         this.context = context;
     }
 
     @NonNull
     @Override
-    public RecyclerDataAdapter.DataViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public RecyclerCateadapter.CateViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView;
-        itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_item, parent, false);
-        return new DataViewHolder(itemView);
+        itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_item, parent, false);
+        return new RecyclerCateadapter.CateViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(RecyclerDataAdapter.DataViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerCateadapter.CateViewHolder holder, int position) {
         String name = meals.get(position).getStrMeal();
-        String desc = meals.get(position).getStrCategory()  + " | " + meals.get(position).getStrArea();
+        String desc = meals.get(position).getStrArea();
         holder.mealName.setText(name);
         holder.mealDesc.setText(desc);
         String id = "i" + meals.get(position).getIdMeal();
         int resourceId = context.getResources().getIdentifier(id, "drawable", context.getPackageName());
+//        String imageUrl = "R.drawable.i" + meals.get(position).getIdMeal();
         if (resourceId != 0) {
             // Resource found, you can use resourceId
             Glide.with(this.context)
@@ -83,22 +84,17 @@ public class RecyclerDataAdapter extends RecyclerView.Adapter<RecyclerDataAdapte
         return meals == null ? 0 : meals.size();
     }
 
-    /**
-     * Data ViewHolder class.
-     */
-    public static class DataViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-
+    public static class CateViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private TextView mealName;
         private ImageView mealImage;
         private TextView mealDesc;
         private ItemClickListener itemClickListener;
 
-        public DataViewHolder(View itemView) {
+        public CateViewHolder(@NonNull View itemView) {
             super(itemView);
-
-            mealName = (TextView) itemView.findViewById(R.id.meal_name);
-            mealImage = (ImageView) itemView.findViewById(R.id.meal_image);
-            mealDesc = (TextView) itemView.findViewById(R.id.meal_desc);
+            mealName = (TextView) itemView.findViewById(R.id.cate_meal_name);
+            mealImage = (ImageView) itemView.findViewById(R.id.cate_meal_image);
+            mealDesc = (TextView) itemView.findViewById(R.id.cate_meal_desc);
 
             itemView.setOnClickListener((View.OnClickListener) this);
         }
@@ -107,10 +103,8 @@ public class RecyclerDataAdapter extends RecyclerView.Adapter<RecyclerDataAdapte
         {
             this.itemClickListener = itemClickListener;
         }
-
         public void onClick(View v) {
             itemClickListener.onClick(v,getAdapterPosition(),false);
         }
-
     }
 }

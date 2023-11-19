@@ -3,12 +3,22 @@ package com.example.momkitchen.Fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.momkitchen.Adapter.RecyclerCateadapter;
+import com.example.momkitchen.Adapter.RecyclerDataAdapter;
+import com.example.momkitchen.Manager.MealManager;
+import com.example.momkitchen.Model.MealModel;
 import com.example.momkitchen.R;
+
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -17,44 +27,13 @@ import com.example.momkitchen.R;
  */
 public class CategoryFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
     public CategoryFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment CategoryFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static CategoryFragment newInstance(String param1, String param2) {
-        CategoryFragment fragment = new CategoryFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+    public static CategoryFragment newInstance(String param1, String param2) {
+        return new CategoryFragment();
     }
 
     @Override
@@ -62,5 +41,37 @@ public class CategoryFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_category, container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        // Load meal data
+        Map<String, List<MealModel>> mealsByCategory = MealManager.getMealsByCategories(
+                requireContext(),
+                "Beef", "Seafood", "Chicken", "Lamb", "Pork", "Goat"
+        );
+
+        String[] categories = {"Beef", "Seafood", "Chicken", "Lamb", "Pork", "Goat"};
+
+        for (String category : categories) {
+            List<MealModel> meals = mealsByCategory.get(category);
+
+            // Skip categories with no meal data
+            if (meals == null || meals.isEmpty()) {
+                continue;
+            }
+
+            String id = category.toLowerCase(Locale.ROOT) + "_cate";
+            int view_id = getContext().getResources().getIdentifier(id, "id", getContext().getPackageName());
+            RecyclerView rvItems = view.findViewById(view_id);
+            LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
+            rvItems.setLayoutManager(layoutManager);
+            rvItems.setHasFixedSize(true);
+
+            RecyclerCateadapter adapter = new RecyclerCateadapter(requireContext(), meals);
+            rvItems.setAdapter(adapter);
+        }
     }
 }
